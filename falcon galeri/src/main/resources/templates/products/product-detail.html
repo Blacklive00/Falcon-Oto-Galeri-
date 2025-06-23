@@ -1,0 +1,231 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Detail</title>
+    <style>
+        /* Dark Theme Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        .header {
+            background-color: #1a1a1a;
+            padding: 1.5rem;
+            text-align: center;
+            border-bottom: 2px solid #c9c304;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+        }
+
+        /* Product Grid Layout */
+        .product-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: start;
+        }
+
+        /* Image Carousel */
+        .image-carousel {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .carousel-image {
+            width: 100%;
+            height: 500px;
+            object-fit: contain;
+            background: #242424;
+        }
+
+        .carousel-control {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(40,40,40,0.8);
+            color: #c9c304;
+            border: none;
+            padding: 1rem 1.2rem;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .carousel-control:hover {
+            background: rgba(201,195,4,0.9);
+            color: #121212;
+        }
+
+        .carousel-control.prev {
+            left: 1rem;
+        }
+
+        .carousel-control.next {
+            right: 1rem;
+        }
+
+        /* Product Details */
+        .product-details {
+            padding: 1.5rem;
+            background: #1a1a1a;
+            border-radius: 12px;
+        }
+
+        .product-title {
+            color: #c9c304;
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .price-tag {
+            font-size: 2rem;
+            color: #28a745;
+            margin: 1.5rem 0;
+        }
+
+        .stock-status {
+            padding: 0.5rem 1rem;
+            background: #2d2d2d;
+            border-radius: 20px;
+            display: inline-block;
+            margin: 1rem 0;
+        }
+
+        .product-description {
+            color: #b0b0b0;
+            margin: 2rem 0;
+            font-size: 1.1rem;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: transform 0.2s ease;
+        }
+
+        .btn-primary {
+            background: #c9c304;
+            color: #121212;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Additional Info Sections */
+        .specifications {
+            margin: 3rem 0;
+            padding: 1.5rem;
+            background: #1a1a1a;
+            border-radius: 12px;
+        }
+
+        .specs-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .specs-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #2d2d2d;
+        }
+
+        .specs-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .carousel-image {
+                height: 350px;
+            }
+            
+            .product-title {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>Ürün Detay</h1>
+    </header>
+
+    <div class="container">
+        <div class="product-grid">
+            <!-- Image Carousel Section -->
+            <div class="image-carousel">
+                <button class="carousel-control prev">❮</button>
+                <img th:src="${product.url}" class="carousel-image" alt="Product Image">
+                <button class="carousel-control next">❯</button>
+            </div>
+
+            <!-- Product Details Section -->
+            <div class="product-details">
+                <h1 class="product-title" th:text="${product.productName}">Premium Wireless Headphones</h1>
+                
+                <div class="price-tag" th:text="'$' + ${product.price}">$299.99</div>
+                
+                <div class="stock-status" th:text="'Stock: ' + ${product.stock}">Stock: 15</div>
+
+                <p>
+                    yakıt türü:benzin <br>
+                    vites türü:otomatik <br>
+                    araba bilgileri:xgcdmlkşjhoygtdrcfmlkşojıuhyıy
+                </p>
+
+                <div class="product-description">
+                    <h3>Product Description</h3>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn btn-primary">Add to Cart</button>
+                    <form th:action="@{/cart/add}" method="get">
+                        <input type="hidden" name="productId" th:value="${product.id}">
+                        <input type="number" name="quantity" value="1" min="1">
+                        <button class="btn btn-secondary" type="submit">Sepete ekle</button>
+                    </form>
+                    
+                </div>
+          
+          
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

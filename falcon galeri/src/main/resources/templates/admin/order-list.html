@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>Sipariş Listesi</title>
+    <style>
+      /* Arka plan resmi ve genel düzen */
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: url('https://avatars.mds.yandex.net/i?id=039dbe13b2ea255ce79e4acfa943114a312f58cf-4863684-images-thumbs&n=13') no-repeat center center fixed;
+        background-size: cover;
+        backdrop-filter: blur(4px);
+      }
+
+      h2 {
+        text-align: center;
+        margin-top: 30px;
+        color: #ffffff;
+        text-shadow: 1px 1px 5px #000;
+      }
+
+      table {
+        width: 90%;
+        margin: 30px auto;
+        border-collapse: collapse;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+      }
+
+      th, td {
+        padding: 12px 15px;
+        text-align: left;
+      }
+
+      thead {
+        background-color: #0d6efd;
+        color: white;
+      }
+
+      tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+
+      tr:hover {
+        background-color: #d0e2ff;
+        transition: 0.3s;
+      }
+
+      ul {
+        padding-left: 20px;
+        margin: 0;
+      }
+
+      li {
+        margin-bottom: 5px;
+        color: #333;
+      }
+
+      @media screen and (max-width: 768px) {
+        table, thead, tbody, th, td, tr {
+          display: block;
+        }
+
+        th {
+          background-color: #0d6efd;
+          color: white;
+          text-align: center;
+        }
+
+        td {
+          border: none;
+          padding: 10px;
+          text-align: left;
+          position: relative;
+        }
+
+        td::before {
+          content: attr(data-label);
+          font-weight: bold;
+          display: block;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Siparişler</h2>
+    <table border="1">
+      <thead>
+        <tr>
+          <th>Sipariş ID</th>
+          <th>Kullanıcı</th>
+          <th>Tarih</th>
+          <th>Ürünler</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="order : ${orders}">
+          <td th:text="${order.id}"></td>
+          <td th:text="${order.user.username}"></td>
+          <td th:text="${#temporals.format(order.orderDate, 'dd/MM/yyyy HH:mm')}"></td>
+          <td>
+            <ul>
+              <li th:each="item : ${order.items}" 
+                  th:text="${item.product.productName + ' x' + item.quantity + ' = ' + (item.quantity * item.price) + '₺'}"></li>
+            </ul>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>

@@ -1,0 +1,156 @@
+          <!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel</title>
+  <style>
+    /* Navbar tasarımı */
+   /* .body yerine body */
+   body {
+  /* Arka plan resmi */
+  background-image: url('https://fullhdwall.com/wp-content/uploads/2016/07/Stunning-Mountain-Landscape.jpg');
+
+  /* Ekranı tamamen kaplasın */
+  background-size: cover;                                     
+
+  /* Ortalı kalsın */
+  background-position: center center;
+
+  /* Tekrarlamasın */
+  background-repeat: no-repeat;
+
+  /* Scroll edince sabit kalsın (opsiyonel) */
+  background-attachment: fixed;
+
+  /* En azından viewport yüksekliği kadar olsun */
+  min-height: 100vh;
+}
+
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      background-color: #333;
+      padding: 10px 20px;
+      color: white;
+    }
+
+    .navbar .logo a {
+      color: white;
+      text-decoration: none;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .user-info a {
+      color: white;
+      text-decoration: none;
+      padding: 5px 10px;
+      border-radius: 5px;
+    }
+
+    .logout-btn {
+      background-color: red;
+    }
+
+    .login-btn {
+      background-color: green;
+    }
+
+    /* Ürün kartları */
+    .card-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .card {
+      width: 250px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 10px;
+      text-align: center;
+    }
+
+    .card img {
+      width: 100%;
+      border-radius: 10px;
+    }
+
+    .update-btn {
+      background-color: blue;
+      color: white;
+      padding: 5px;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+
+    .delete-btn {
+      background-color: red;
+      color: white;
+      padding: 5px;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+
+    .add-btn {
+      display: block;
+      width: 200px;
+      text-align: center;
+      margin: 20px auto;
+      padding: 10px;
+      background-color: green;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+    .admin-panel{
+      color: tomato;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="logo">
+      <a th:href="@{/products/list}">Yönetim Sayfası</a>
+    </div>
+
+    <div class="user-info">
+      <span sec:authorize="isAuthenticated()" sec:authentication="name"></span>
+      <form action="#" th:action="@{/logout}" method="post">
+        <input type="submit"sec:authorize="isAuthenticated()" th:href="@{/logout}" class="logout-btn" value="logout">
+
+      </form>
+
+<a sec:authorize="!isAuthenticated()" th:href="@{/showMyLoginPage}" class="login-btn">Giriş</a>
+<a sec:authorize="!isAuthenticated()" th:href="@{/user/adminPanel}" class="admin-panel">Kayıt ol</a>
+<div sec:authorize="hasRole('ADMIN')">
+  <a th:href="@{/user/findUserForm}" class="admin-panel">kullanıcı Ara</a>
+  <a th:href="@{/user/showFormForAddUser}" class="admin-panel">kullanıcı Ekle</a>
+  <a th:href="@{/admin/orders}" class="admin-panel">Siparişleri Görüntüle</a>
+
+</div>
+    
+  </nav>
+  <br><br><br>
+  <div sec:authorize="hasRole('ADMIN')">
+    <a th:href="@{/user/findUserForm}" class="admin-panel">kullanıcı Ara</a>
+    <br><br>
+    <a th:href="@{/user/showFormForAddUser}" class="admin-panel">yönetici Paneli ile kullanıcı oluşturma</a>
+  </div> 
+</div>
+</body>
+
+</html>

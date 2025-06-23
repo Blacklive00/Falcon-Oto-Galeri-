@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Edit User Roles</title>
+
+  <style>
+    /* Genel stil ayarları */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  margin: 0;
+  padding: 20px;
+}
+
+/* Başlık stili */
+h2 {
+  text-align: center;
+  color: #444;
+}
+
+/* Form kapsayıcısı */
+form {
+  background-color: #fff;
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Form bölüm başlığı */
+form div:first-of-type {
+  margin-bottom: 15px;
+}
+
+/* Etiket stili */
+label {
+  font-weight: bold;
+  display: block;
+  margin: 5px 0;
+}
+
+/* Checkbox'ların hizalanması */
+input[type="checkbox"] {
+  margin-right: 5px;
+  transform: scale(1.2);
+  vertical-align: middle;
+}
+
+/* Güncelleme butonu */
+button[type="submit"] {
+  background-color: #007BFF;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  display: block;
+  margin: 20px auto;
+}
+
+/* Buton hover efekti */
+button[type="submit"]:hover {
+  background-color: #0069d9;
+}
+
+/* Geri bağlantısı */
+a {
+  display: block;
+  text-align: center;
+  margin-top: 20px;
+  text-decoration: none;
+  color: #007BFF;
+}
+
+/* Geri bağlantısı hover efekti */
+a:hover {
+  text-decoration: underline;
+}
+
+  </style>
+
+</head>
+
+<body>
+  <h2>Rolü Düzenle  <span th:text="${user.username}"></span></h2>
+
+  <form th:action="@{/user/updateRoles}" method="post">
+    <input type="hidden" name="userId" th:value="${user.id}" />
+
+    <div>
+      <label>Rolü Seçiniz:</label>
+      <div th:each="role : ${allRoles}">
+        <input type="checkbox" name="roleIds" th:value="${role.id}" th:checked="${user.roles.contains(role)}" />
+        <label th:text="${role.name}"></label>
+      </div>
+    </div>
+
+    <button type="submit">Rolu yükseltin</button>
+  </form>
+
+  <a th:href="@{/admin/showPanel}">Admin Paneline Dön</a>
+</body>
+
+</html>

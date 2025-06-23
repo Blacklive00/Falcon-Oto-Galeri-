@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/src/main/resources/static/style.css">
+  <title>Create Product</title>
+  <style> 
+    /* Genel sayfa stili */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #8e44ad, #9b59b6); /* Mor tonlarında degrade arka plan */
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    /* Form kapsayıcı stili */
+    .container {
+      background: #fff;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      width: 90%;
+      max-width: 500px;
+      text-align: center;
+    }
+    h2 {
+      color: #333;
+      margin-bottom: 30px;
+    }
+    /* Form elemanları */
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    form label {
+      text-align: left;
+      color: #555;
+      font-weight: bold;
+    }
+    form input[type="text"],
+    form input[type="submit"] {
+      width: 100%;
+      padding: 12px 15px;
+      margin: 5px 0;
+      border: none;
+      border-radius: 5px;
+      box-sizing: border-box;
+      transition: box-shadow 0.3s, border 0.3s;
+    }
+    form input[type="text"] {
+      background-color: #f7f7f7;
+      border: 1px solid #ccc;
+    }
+    form input[type="text"]:focus {
+      border: 1px solid #8e44ad;
+      box-shadow: 0 0 8px rgba(142, 68, 173, 0.5);
+      outline: none;
+    }
+    form input[type="submit"] {
+      background-color: #8e44ad;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s, box-shadow 0.3s;
+    }
+    form input[type="submit"]:hover {
+      background-color: #732d91;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    }
+    /* Bağlantı stili */
+    form a {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #8e44ad;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+      transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    }
+    form a:hover {
+      background-color: #732d91;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Create Product</h2>
+
+    <form action="#" th:action="@{/products/save}" th:object="${theProduct}" method="post">
+    
+      <input type="hidden" th:field="*{id}" placeholder="id">
+      <label for="productName">Ürün Adı:</label>
+      <input type="text" id="productName" th:field="*{productName}" placeholder="Product Name">
+      
+      <label for="price">Ürün Fiyatı:</label>
+      <input type="text" id="price" th:field="*{price}" placeholder="Product Price">
+      
+      <label for="stock">Ürün Stok:</label>
+      <input type="text" id="stock" th:field="*{stock}" placeholder="Product Stock">
+      
+      <label for="url">Resim URL:</label>
+      <input type="text" id="url" th:field="*{url}" placeholder="Product URL">
+      
+      <input type="submit" value="Güncelle">
+      <a th:href="@{/products/list}">Ürün Listesine Geri Dön</a>
+    </form>
+  </div>
+</body>
+</html>

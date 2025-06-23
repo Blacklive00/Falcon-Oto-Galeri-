@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create User Admin</title>
+ <style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(to right, #dbeafe, #e0f2fe);
+    margin: 0;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+  }
+
+  h2 {
+    color: #1e3a8a;
+    margin-bottom: 25px;
+    text-shadow: 1px 1px 2px #94a3b8;
+  }
+
+  form {
+    background-color: #ffffff;
+    padding: 40px 35px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    width: 100%;
+    max-width: 520px;
+    transition: transform 0.3s ease;
+  }
+
+  form:hover {
+    transform: translateY(-5px);
+  }
+
+  label {
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 6px;
+    display: block;
+    font-size: 15px;
+  }
+
+  input[type="text"] {
+    width: 100%;
+    padding: 10px 14px;
+    margin-bottom: 16px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 15px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  input[type="text"]:focus {
+    border-color: #3b82f6;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+  }
+
+  input[type="checkbox"] {
+    margin-right: 8px;
+    accent-color: #3b82f6;
+    transform: scale(1.1);
+  }
+
+  span {
+    font-size: 14px;
+    color: #374151;
+  }
+
+  input[type="submit"] {
+    background-color: #3b82f6;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    font-size: 15px;
+    cursor: pointer;
+    font-weight: 600;
+    box-shadow: 0 4px 10px rgba(59, 130, 246, 0.4);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+
+  input[type="submit"]:hover {
+    background-color: #2563eb;
+    transform: scale(1.03);
+  }
+
+  a {
+    display: inline-block;
+    margin-top: 18px;
+    text-decoration: none;
+    color: #2563eb;
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+
+  a:hover {
+    color: #1e40af;
+    text-decoration: underline;
+  }
+</style>
+  
+</head>
+<body>
+  
+  <h2>Admin kullanıcı oluştur</h2>
+
+  <form action="#" th:action="@{/user/save}" th:object="${user}" method="post">
+
+<input type="hidden" th:field="*{id}" />
+
+    <label for="username">kullanıcı Adı: </label>
+    <input type="text" th:field="*{username}" placeholder="User Name">
+    <br><br>
+
+    <label for="password">Şifre: </label>
+    <input type="text" th:field="*{password}" placeholder="Password">
+    <br><br>
+
+    <label for="email">Email: </label>
+    <input type="text" th:field="*{email}" placeholder="Email">
+    <br><br>
+
+    <label for="roles">Roller: </label>
+    <div th:each="role : ${allRoles}">
+      <input type="checkbox" th:field="*{roles}" th:value="${role.id}" />
+      <span th:text="${role.name}"></span><br/>
+    </div>
+
+    <br><br>
+    <input  type="submit" value="Submit">
+    <br><br>
+     
+    <a th:href="@{/admin/showPanel}">Admin Paneline Dön</a>
+  </form>
+
+</body>
+</html>

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+  <title>Create Product</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 1rem;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.98);
+      padding: 1.5rem;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 500px;
+      transition: transform 0.3s ease;
+    }
+
+    h2 {
+      color: #2c3e50;
+      text-align: center;
+      margin: 0 0 1.5rem 0;
+      font-size: 1.6rem;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .form-row {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    label {
+      color: #34495e;
+      font-weight: 500;
+      font-size: 0.9rem;
+    }
+
+    input[type="text"] {
+      padding: 0.8rem;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 1rem;
+      width: 100%;
+      box-sizing: border-box;
+      background: #f8f9fa;
+    }
+
+    input[type="submit"] {
+      background: linear-gradient(45deg, #3498db, #2980b9);
+      color: white;
+      padding: 1rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      margin-top: 1rem;
+      width: 100%;
+      cursor: pointer;
+    }
+
+    a {
+      display: block;
+      text-align: center;
+      text-decoration: none;
+      color: #3498db;
+      padding: 0.8rem;
+      border: 2px solid #3498db;
+      border-radius: 8px;
+      margin-top: 1rem;
+      font-weight: 500;
+      background: white;
+    }
+
+    /* Desktop Styles */
+    @media (min-width: 768px) {
+      .card {
+        padding: 2.5rem;
+      }
+      
+      .form-row {
+        flex-direction: row;
+        align-items: center;
+        gap: 1.5rem;
+      }
+      
+      label {
+        flex: 0 0 120px;
+        text-align: right;
+        font-size: 1rem;
+      }
+      
+      input[type="submit"], a {
+        width: auto;
+        display: inline-block;
+        padding: 1rem 2rem;
+      }
+      
+      a {
+        margin-left: 1rem;
+      }
+    }
+
+    /* Hover Effects for Desktop Only */
+    @media (hover: hover) and (pointer: fine) {
+      .card:hover {
+        transform: translateY(-3px);
+      }
+      
+      input[type="submit"]:hover {
+        background: linear-gradient(45deg, #2980b9, #3498db);
+        transform: translateY(-2px);
+      }
+      
+      a:hover {
+        background: #3498db;
+        color: white;
+        transform: translateY(-2px);
+      }
+    }
+
+    /* Mobile Optimizations */
+    @media (max-width: 480px) {
+      body {
+        padding: 0.5rem;
+        min-height: 100dvh;
+      }
+      
+      .card {
+        padding: 1.2rem;
+        border-radius: 12px;
+      }
+      
+      h2 {
+        font-size: 1.4rem;
+        margin-bottom: 1.2rem;
+      }
+      
+      input[type="text"] {
+        padding: 0.7rem;
+        font-size: 0.95rem;
+      }
+      
+      input[type="submit"], a {
+        font-size: 0.95rem;
+        padding: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>Ürün Oluştur</h2>
+    <form action="#" th:action="@{/products/save}" th:object="${product}" method="post">
+      <div class="form-row">
+        <label>Ürün İsmi:</label>
+        <input type="text" th:field="*{productName}" placeholder="Product Name">
+      </div>
+      
+      <div class="form-row">
+        <label>Ürün Fiyatı:</label>
+        <input type="text" th:field="*{price}" placeholder="Product Price">
+      </div>
+      
+      <div class="form-row">
+        <label>Stok Sayısı:</label>
+        <input type="text" th:field="*{stock}" placeholder="Product Stock">
+      </div>
+      
+      <div class="form-row">
+        <label>Resim URL:</label>
+        <input type="text" th:field="*{url}" placeholder="Product URL">
+      </div>
+      
+    
+
+      <input type="submit" value="Submit">
+      <a th:href="@{/products/list}">Ürün Sayfasına Dön</a>
+    </form>
+  </div>
+</body>
+</html>

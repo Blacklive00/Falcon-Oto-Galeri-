@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Information</title>
+
+<style>
+  body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #dff6ff, #a4cafe);
+    margin: 0;
+    padding: 40px 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+  }
+
+  .info-box {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 40px 50px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    max-width: 650px;
+    width: 100%;
+    margin-bottom: 30px;
+    animation: fadeIn 0.6s ease;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .info-box p {
+    font-size: 18px;
+    margin: 14px 0;
+    color: #000000; /* Tam siyah */
+  }
+
+  .info-box span {
+    font-weight: 600;
+    color: #000000; /* Tam siyah */
+  }
+
+  .error-box {
+    background: #ffe6e6;
+    color: #d63031;
+    border: 1px solid #fab1a0;
+    border-radius: 12px;
+    padding: 20px 25px;
+    box-shadow: 0 4px 20px rgba(255, 0, 0, 0.05);
+    text-align: center;
+    max-width: 500px;
+    width: 100%;
+  }
+
+  a {
+    color: #0984e3;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+
+  a:hover {
+    color: #0652dd;
+    text-decoration: underline;
+  }
+
+  .btn-link {
+    display: inline-block;
+    background-color: #0984e3;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 15px;
+    margin-top: 20px;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+    text-align: center;
+  }
+
+  .btn-link:hover {
+    background-color: #0652dd;
+  }
+</style>
+
+
+
+</head>
+
+<body>
+
+  <div class="info-box" th:if="${userinfo != null}">
+    <p>Kullanıcı Adı: <span th:text="${userinfo.username}"></span></p>
+    <p>Email: <span th:text="${userinfo.email}"></span></p>
+    <p>Aktif Mi: <span th:text="${userinfo.enabled}"></span></p>
+    <p>Şifre: <span th:text="${userinfo.password}"></span></p>
+    <p>Rolleri: <span th:each="tempRole : ${userinfo.roles}" th:text="${tempRole} + ' '"></span></p>
+
+    <a class="btn-link" th:href="@{/user/editRoles/{id}(id=${userinfo.id})}">Kullanıcı Rolünü Ayarla</a>
+    <br>
+    <a th:href="@{/admin/showPanel}">← Admin Paneline Dön</a>
+  </div>
+
+  <div class="error-box" th:if="${error != null}">
+    <p th:text="${error}"></p>
+    <a th:href="@{/admin/showPanel}">← Admin Paneline Dön</a>
+  </div>
+
+</body>
+
+</html>

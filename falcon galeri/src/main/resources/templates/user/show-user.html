@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Find User</title>
+  <style>
+    /* Modern degrade arka plan ve font ayarları */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #7f5af0, #2cb67d);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    /* Form kutusu */
+    form {
+      background: #ffffff;
+      padding: 30px 40px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      width: 100%;
+      max-width: 420px;
+      text-align: center;
+    }
+
+    /* Başlık veya açıklama */
+    form p {
+      font-size: 18px;
+      color: #333;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    /* Metin giriş kutusu */
+    input[type="text"] {
+      width: 100%;
+      padding: 12px 15px;
+      margin-bottom: 20px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      font-size: 15px;
+      transition: border-color 0.3s ease;
+    }
+
+    input[type="text"]:focus {
+      border-color: #7f5af0;
+      outline: none;
+    }
+
+    /* Arama butonu */
+    input[type="submit"] {
+      background: #7f5af0;
+      color: #fff;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 8px;
+      font-size: 15px;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    input[type="submit"]:hover {
+      background: #5a3fc0;
+      transform: scale(1.03);
+    }
+
+    /* Link stili */
+    a {
+      color: #7f5af0;
+      text-decoration: none;
+      font-size: 14px;
+      display: inline-block;
+      margin-top: 15px;
+      transition: color 0.3s ease;
+    }
+
+    a:hover {
+      color: #5a3fc0;
+      text-decoration: underline;
+    }
+  </style>
+
+</head>
+
+<body>
+  <form th:action="@{/user/showFindingUser}" method="get">
+    <p>kullanıcı Adı:</p>
+    <input type="text" name="username" placeholder="Enter username" />
+    <input type="submit" value="Search">
+
+    <br><br>
+    <a th:href="@{/admin/showPanel}">Admin Paneline Dön</a>
+
+
+  </form>
+
+
+</body>
+
+</html>

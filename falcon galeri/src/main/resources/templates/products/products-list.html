@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="UTF-8">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Falcon Bijüteri'den şık ve kaliteli takılar. En yeni modelleri keşfedin ve online alışveriş yapın.">
+  <meta name="keywords" content="takı, bijüteri, kolye, küpe, bileklik, online alışveriş">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">              
+  <title>Falcon  Oto Galeri</title>
+  <link rel="stylesheet" th:href="@{/ürün.css}">
+
+
+  
+
+</head>
+<body>
+<header>
+  <div class="signup">
+    <a>
+      <button id="signup"><a sec:authorize="!isAuthenticated()" th:href="@{/user/showFormForAddDefUser}" class="add-btn">kayıt Ol</a></button>
+      <form id="signupForm" style="display: none;"></form>
+    </a>
+
+
+
+  </div>
+  <nav>
+<ul>
+ <li> <div sec:authorize="hasRole('ADMIN')">
+      <a th:href="@{/admin/showPanel}" class="add-btn">Admin Panel</a>
+    </div></li>
+    <li><a href=""><span sec:authorize="isAuthenticated()" sec:authentication="name"></span></a></li>
+  </ul></nav>
+  <div class="login">
+    <button id="loginButton">
+      <a sec:authorize="!isAuthenticated()" th:href="@{/showMyLoginPage}" class="login-btn">Giriş Yap</a>
+    </button>
+    <form th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()">
+      <input type="submit" class="logout-btn" value="Logout">
+    </form>
+</div>
+
+<form id="loginForm" style="display: none;"></form>
+
+
+
+  <!-- <div class="login">
+    <a href="http://127.0.0.1:5500/as%C4%B1l%20proje/2giri%C5%9Fyap.html"><button id="loginButton">Giriş Yap</button></a>
+    <form id="loginForm" style="display: none;"></form>
+  </div> -->
+
+
+  </div>
+  <div class="logo-container" >
+    <!-- İstersen içine yazı da koyabilirsin -->
+   
+</div>
+
+  </div>
+    
+    <h1 style="position: relative;left:5%;">Falcon Oto Galeri</h1 >
+  </div>
+  <nav>
+    <ul>
+      <li><a href="">Satış Yap</a></li>
+      <li><a href="">Ürünler</a></li>
+      <li><a href="http://localhost:8080/cart/">Sepet</a></li> 
+      <li><a href="#" onclick="scrollToContact()">İletişim</a></li>
+      <li><a href="#" onclick="scrollToAbout()">Hakkımızda</a></li>
+      
+    </ul>
+  </nav>
+</header>
+<main>
+  <h2 style="text-align: center;">Araçlar</h2>
+  
+
+  <section class="products">
+    <div class="card-container" th:each="tempProduct : ${products}">
+      <div class="image-box">
+        <a th:href="@{/products/{id}(id=${tempProduct.id})}" style="text-decoration: none; color: inherit;">
+          <img id="product-img-1" th:src="${tempProduct.url}" alt="Product Image">
+          <div class="content">
+            <h3 th:text="${tempProduct.productName}">Ürün Adı</h3>
+            <p th:text="'Stock: ' + ${tempProduct.stock}">Stok: 0</p>
+            <p th:text="'Price: $' + ${tempProduct.price}">fiyat: $0</p>
+            
+          </div>
+        </a>
+       
+
+         <form th:action="@{/cart/add}" method="get">
+          <input type="hidden" name="productId" th:value="${tempProduct.id}">
+          <input style="position: absolute;top: 88%; right:40%;" type="number" name="quantity" value="1" min="1">
+          <button style="position: absolute;top: 85%; right:10%;" type="submit" class="add-to-cart-btn">Sepete ekle</button>
+        </form>
+        
+      
+      <div sec:authorize="hasRole('MANAGER')">
+          <a style="position:absolute;top: 91% ; right: 65%;background-color: blue;" th:href="@{/products/showFormForUpdate(productId=${tempProduct.id})}" class="update-btn">güncelle</a>
+          <a style="position:absolute;top: 91%; right: 50% ;background-color: red;" th:href="@{/products/deleteProduct(productId=${tempProduct.id})}" class="update-btn">Sil</a>
+      
+</div>
+    
+    
+      
+      </div>
+    </div>
+    <!-- "Ürün Ekle" butonu için div kapatıldı -->
+    <div sec:authorize="hasRole('MANAGER')">
+      <form th:action="@{/products/showFormForAdd}" method="get" style="display: inline;">
+          <button type="submit" class="add-btn">Ürün Ekle</button>
+      </form>
+  </div>
+  
+  </section>
+
+   
+
+
+    <!-- Diğer ürünler buraya eklenecek -->
+
+  <section class="cart" id="sepetim">
+    <h2>Sepet</h2>
+    <ul id="cartItems"></ul>
+    <button onclick="checkout()">Satın Al</button>
+  </section>
+  <section class="about" id="about">
+    <h2>Hakkımızda</h2>
+    <p>Falcon Oto Galeri olarak, siz değerli müşterilerimize güvenilir, kaliteli ve uygun fiyatlı araçlar sunmak amacıyla yola çıktık. Hedefimiz; geniş araç portföyümüz ile her ihtiyaca ve bütçeye hitap eden otomobilleri sizlerle buluşturarak, hayalinizdeki araca en kolay şekilde ulaşmanızı sağlamaktır.
+
+      Otomotiv sektöründeki gelişmeleri yakından takip eden deneyimli ekibimiz, hem sıfır hem de ikinci el araçlarda kalite ve müşteri memnuniyetini ön planda tutarak hizmet vermektedir. Galerimizde yer alan tüm araçlar, uzman kadromuz tarafından detaylı kontrollerden geçirilerek satışa sunulmaktadır.
+      
+      Müşterilerimize en konforlu alışveriş deneyimini yaşatmak için kullanıcı dostu bir web arayüzü ve şeffaf hizmet anlayışı sunuyoruz. Güvenli ödeme seçenekleri, hızlı geri dönüş ve çözüm odaklı destek politikamız ile sizlere uzun vadeli bir memnuniyet sağlamayı hedefliyoruz.
+      
+      Falcon Oto Galeri olarak, kaliteli hizmet anlayışımız ve uygun fiyat politikamızla her kesimden müşterinin güvenle araç sahibi olmasına yardımcı olmayı amaçlıyoruz. Bu vizyonla hem yerel ekonomiye katkıda bulunmayı hem de işletmemizin sürdürülebilir büyümesini sağlamayı hedefliyoruz.
+      
+      Bizi tercih ettiğiniz için teşekkür ederiz. Sizleri de Falcon Oto Galeri ailesinin bir parçası olarak görmekten mutluluk duyarız!
+      
+      </p>
+      </section>
+      <section class="about" id="sosyal">
+        <h2>Sosyal Medya</h2>
+        <div style="font-size: larger;">
+        <ul>
+          <p><a href="https://www.instagram.com/"><img style="width: 50px;  height: auto;" src="https://th.bing.com/th/id/OIP.lECad1wC12WN1ue6iEKbYwHaHk?rs=1&pid=ImgDetMain" alt="instegram"> Instagram: @falconbjuteri</a></p>
+        </ul>
+        <ul>
+          <p><a href="https://www.facebook.com/?%3E"><img style="width: 50px;  height: auto;" src="https://th.bing.com/th/id/R.ec614f51078884a3dcdc412ef8e8a61c?rik=34vbPDEjJvKmgw&pid=ImgRaw&r=0" alt="facebook">facebook: @falconbjuteri</a></p>
+        </ul>
+        <ul>
+          <p><a href="https://wa.me/905461451286"><img style="width: 50px;  height: auto;" src="//ideacdn.net/idea/eu/43/themes/selftpl_655cacd375460/assets/images/icon-whatsapp.svg?revision=7.2.9.0-3-1739436039" alt="whatsap">whatsap: 0533 123 4567  </a></p>
+        </ul>
+        </div>
+      </section>                                      
+
+      <section class="about" id="contact">
+        <h2>İletişim</h2>
+        <p>Bize ulaşmak için aşağıdaki bilgileri kullanabilirsiniz:</p>
+        <div>
+          <ul>
+            <li>
+              <a href="tel:+905462862425">
+                <img src="http://ideacdn.net/idea/eu/43/themes/selftpl_655cacd375460/assets/images/icon-phone.svg?revision=7.2.9.0-3-1739436039" alt="Telefon" width="20">
+                Telefon No: 0546 286 24 25
+              </a>
+            </li>
+          </ul>
+          <ul>
+            <li>
+              <a href="mailto:info@falconbjiter.com">
+                <img src="https://mailmeteor.com/logos/assets/PNG/Gmail_Logo_256px.png" alt="E-posta" width="20">
+                E-Mail: info@falconbjiter.com
+              </a>
+            </li>
+          </ul>
+        </div>
+      </section>
+      
+</main>
+<div class="enes">
+  <button  onclick="changeCSS()"></button>
+</div>
+<footer>
+  <p>&copy; 2024 Falcon Bijüteri. Tüm hakları saklıdır.</p>
+</footer>
+<script>
+
+
+  const images = {
+    'product-img-1': [
+     
+    ],
+    'product-img-2': [
+      
+    ],
+    'product-img-3': [
+      
+    ],
+    'product-img-4': [
+     
+    ],
+    'product-img-5': [
+     
+    ],
+    'product-img-6': [
+    
+    ],
+    'product-img-7': [
+      
+    ],
+    'product-img-8': [
+     
+    ],
+    'product-img-9': [
+     
+    ],
+    // Diğer ürünler için resimler buraya eklenecek
+  };
+
+  function changeImage(imgId, direction) {
+    const imgElement = document.getElementById(imgId);
+    const imgList = images[imgId];
+    if (!imgList || imgList.length === 0) return;
+    let currentIndex = imgList.indexOf(imgElement.src);
+    if (direction === 'next') {
+      currentIndex = (currentIndex + 1) % imgList.length;
+    } else if (direction === 'prev') {
+      currentIndex = (currentIndex - 1 + imgList.length) % imgList.length;
+    }
+    imgElement.src = imgList[currentIndex];
+  }
+
+  function addToCart(product) {
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    cart.push(product);
+    localStorage.setItem('cart', JSON.stringify(cart));
+    alert(product + ' sepete eklendi!');
+    updateCart();
+  }
+
+  function updateCart() {
+    const cartItems = document.getElementById('cartItems');
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    cartItems.innerHTML = '';
+    cart.forEach(item => {
+      const li = document.createElement('li');
+      li.textContent = item;
+      cartItems.appendChild(li);
+    });
+  }
+
+  
+
+  function checkout() {
+    alert('Satın alma işlemi tamamlandı!');
+    localStorage.removeItem('cart');
+    updateCart();
+  }
+
+  function scrollToCart() {
+    const cartSection = document.getElementById('sepetim');
+    if (cartSection) {
+      cartSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+
+  function scrollToContact() {
+    const contactSection = document.getElementById('contact');
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+
+  function scrollToAbout() {
+    const aboutSection = document.getElementById('about');
+    if (aboutSection) {
+      aboutSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+
+  // Sayfa yüklendiğinde sepeti güncelle
+  window.onload = updateCart;
+</script>
+<script>
+  var isStyle1 = true;
+ 
+
+  function changeCSS() {
+      document.body.classList.toggle('style2');
+  }
+
+  
+</script>
+
+
+</body>
+</html>
